@@ -1,0 +1,22 @@
+Requirements:
+
+ - Python 2.x at /usr/bin/python
+
+ - ansi C compiler
+
+To build single target, using the default native C compiler:
+
+  cd quarqd/src ; make
+
+To build all targets:
+
+  cd quarqd ; make
+
+(This will fail unless you have installed the same cross compilers as me.)
+
+
+Please report bugs to me.
+Mark Rages
+mark@quarq.us
+markrages@gmail.com
+Feb 2011.
