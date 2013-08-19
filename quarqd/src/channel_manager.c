@@ -15,6 +15,7 @@ void channel_manager_init(channel_manager_t *self) {
   if (0) {
     channel_manager_remember_device(self, 17, CHANNEL_TYPE_POWER);
     channel_manager_remember_device(self, 17, CHANNEL_TYPE_HR);
+    channel_manager_remember_device(self, 17, CHANNEL_TYPE_WG);
     channel_manager_remember_device(self, 17, CHANNEL_TYPE_SandC);
     channel_manager_remember_device(self, 17, CHANNEL_TYPE_SPEED);
   

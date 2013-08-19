@@ -6,6 +6,8 @@
 #include "ant.h"
 #include "configuration.h"
 
+#define DEBUG
+
 static void (*eventFuncs[ANT_MAX_CHANNELS])(void *data, unsigned char *message) = {NULL, NULL, NULL, NULL};
 static void *privateData[ANT_MAX_CHANNELS];
 static unsigned char rxMessage[ANT_MAX_MESSAGE_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};

@@ -115,6 +115,7 @@ void ANT_ReceiveByte(unsigned char byte);
 
 // ANT+sport
 #define ANT_SPORT_HR_PERIOD 8070
+#define ANT_SPORT_WG_PERIOD 8192     //ziran - referred from blood glu
 #define ANT_SPORT_POWER_PERIOD 8182
 #define ANT_SPORT_SPEED_PERIOD 8118
 #define ANT_SPORT_CADENCE_PERIOD 8102
@@ -123,6 +124,7 @@ void ANT_ReceiveByte(unsigned char byte);
 #define ANT_QUARQ_PERIOD (8182*4)
 
 #define ANT_SPORT_HR_TYPE 0x78
+#define ANT_SPORT_WG_TYPE 119		//ziran
 #define ANT_SPORT_POWER_TYPE 11
 #define ANT_SPORT_SPEED_TYPE 0x7B
 #define ANT_SPORT_CADENCE_TYPE 0x7A

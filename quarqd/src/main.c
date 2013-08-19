@@ -26,12 +26,15 @@
 
 #define MAX_CLIENTS 64
 
-#error Fix NetworkKey to ANT+ key
-static const unsigned char NetworkKey[8] = { 0x00, 0x00, 0x00, 0x00,
-					     0x00, 0x00, 0x00, 0x00 };
+//#error Fix NetworkKey to ANT+ key
+/*static const unsigned char NetworkKey[8] = { 0x00, 0x00, 0x00, 0x00,
+					     0x00, 0x00, 0x00, 0x00 }; */
+
+static const unsigned char NetworkKey[8] = {0xB9, 0xA5, 0x21, 0xFB, 0xBD, 0x72, 0xC3, 0x45};
 
 static const char NAME[] = "Quarqd";
 char * heartRateMsgFormat;
+char * weightMsgFormat; //ziran
 char * wheelMsgFormat;
 char * crankMsgFormat;
 char * powerMsgFormat;

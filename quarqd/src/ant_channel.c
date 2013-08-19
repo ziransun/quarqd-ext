@@ -8,6 +8,7 @@
 #include "channel_manager.h"
 #include "configuration.h"
 
+#define DEBUG
 
 #ifndef DEBUG    
 #define ant_message_print_debug(message) do { ; } while (0)
@@ -27,6 +28,14 @@ const ant_sensor_type_t ant_sensor_types[] = {
     .network=ANT_SPORT_NETWORK_NUMBER,
     .descriptive_name="Heartrate",
     .suffix='h'
+  },
+  { .type=CHANNEL_TYPE_WG, 			//ziran
+      .period=ANT_SPORT_WG_PERIOD,
+      .device_id=ANT_SPORT_WG_TYPE,
+      .frequency=ANT_SPORT_FREQUENCY,
+      .network=ANT_SPORT_NETWORK_NUMBER,
+      .descriptive_name="Weight",
+      .suffix='w'
   },
   { .type=CHANNEL_TYPE_POWER,
     .period=ANT_SPORT_POWER_PERIOD,
@@ -384,6 +393,10 @@ void ant_channel_broadcast_event(ant_channel_t *self, unsigned char *ant_message
       ant_message_print_debug(message);
       matched=xml_message_interpret_heartrate_broadcast(self, message);
       break;
+    case CHANNEL_TYPE_WG:
+	  ant_message_print_debug(message);
+	  //matched=xml_message_interpret_weight_broadcast(self, message);//TODO: update .py files
+	  break;
     case CHANNEL_TYPE_POWER:    
       matched=xml_message_interpret_power_broadcast(self, message);
       break;
