@@ -17,7 +17,9 @@
 enum { 
   CHANNEL_TYPE_UNUSED,
   CHANNEL_TYPE_HR,
-  CHANNEL_TYPE_WG,  //ziran -scale
+  CHANNEL_TYPE_WG,  //weightscale
+  CHANNEL_TYPE_BG,  //bloodglucose
+  CHANNEL_TYPE_BP,  //bloodpressure
   CHANNEL_TYPE_POWER, 
   CHANNEL_TYPE_SPEED,
   CHANNEL_TYPE_CADENCE,

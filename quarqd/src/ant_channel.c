@@ -29,7 +29,7 @@ const ant_sensor_type_t ant_sensor_types[] = {
     .descriptive_name="Heartrate",
     .suffix='h'
   },
-  { .type=CHANNEL_TYPE_WG, 			//ziran
+  { .type=CHANNEL_TYPE_WG, 			
       .period=ANT_SPORT_WG_PERIOD,
       .device_id=ANT_SPORT_WG_TYPE,
       .frequency=ANT_SPORT_FREQUENCY,
@@ -37,6 +37,23 @@ const ant_sensor_type_t ant_sensor_types[] = {
       .descriptive_name="Weight",
       .suffix='w'
   },
+  { .type=CHANNEL_TYPE_BG, 			
+      .period=ANT_SPORT_BG_PERIOD,
+      .device_id=ANT_SPORT_BG_TYPE,
+      .frequency=ANT_SPORT_FREQUENCY,
+      .network=ANT_SPORT_NETWORK_NUMBER,
+      .descriptive_name="Bloodglucose",
+      .suffix='g'
+  },
+  { .type=CHANNEL_TYPE_BP, 			
+      .period=ANT_SPORT_BP_PERIOD,
+      .device_id=ANT_SPORT_BP_TYPE,
+      .frequency=ANT_SPORT_FREQUENCY,
+      .network=ANT_SPORT_NETWORK_NUMBER,
+      .descriptive_name="Bloodpressure",
+      .suffix='b'
+  },
+  
   { .type=CHANNEL_TYPE_POWER,
     .period=ANT_SPORT_POWER_PERIOD,
     .device_id=ANT_SPORT_POWER_TYPE,
@@ -397,6 +414,14 @@ void ant_channel_broadcast_event(ant_channel_t *self, unsigned char *ant_message
 	  ant_message_print_debug(message);
 	  //matched=xml_message_interpret_weight_broadcast(self, message);//TODO: update .py files
 	  break;
+   case CHANNEL_TYPE_BG:
+	  ant_message_print_debug(message);
+	  //matched=xml_message_interpret_weight_broadcast(self, message);//TODO: update .py files
+	  break;
+   case CHANNEL_TYPE_BP:
+	  ant_message_print_debug(message);
+	  //matched=xml_message_interpret_weight_broadcast(self, message);//TODO: update .py files
+	  break;	  
     case CHANNEL_TYPE_POWER:    
       matched=xml_message_interpret_power_broadcast(self, message);
       break;

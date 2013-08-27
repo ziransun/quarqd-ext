@@ -34,7 +34,9 @@ static const unsigned char NetworkKey[8] = {0xB9, 0xA5, 0x21, 0xFB, 0xBD, 0x72, 
 
 static const char NAME[] = "Quarqd";
 char * heartRateMsgFormat;
-char * weightMsgFormat; //ziran
+char * weightMsgFormat;
+char * bgluMsgformat;
+char * bpressureformat;
 char * wheelMsgFormat;
 char * crankMsgFormat;
 char * powerMsgFormat;
