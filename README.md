@@ -16,7 +16,7 @@ Once build is successful, executable will be created at quarqd_ext/quarqd_dist/q
 
 run
 
-./quarqd
+sudo ./quarqd
 
 
 
