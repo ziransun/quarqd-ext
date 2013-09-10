@@ -18,6 +18,11 @@ run
 
 sudo ./quarqd
 
+By default, it is assumed the your ANT+ USB is mounted at /dev/ttyANT. If it's not, it will throw an error. To work around this, 
+First check where your ANT+ USB is mounted to. For example, if it's mounted as /dev/ttyUSB0, do a symbolic link to ttyANT. In /dev
+
+sudo ln -s ttyUSB0 ttyANT
+
 
 
 
