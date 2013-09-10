@@ -53,6 +53,14 @@ const ant_sensor_type_t ant_sensor_types[] = {
       .descriptive_name="Bloodpressure",
       .suffix='b'
   },
+  { .type=CHANNEL_TYPE_PD,
+        .period=ANT_SPORT_PD_PERIOD,
+        .device_id=ANT_SPORT_PD_TYPE,
+        .frequency=ANT_SPORT_FREQUENCY,
+        .network=ANT_SPORT_NETWORK_NUMBER,
+        .descriptive_name="Pedometer",
+        .suffix='P'
+    },
   
   { .type=CHANNEL_TYPE_POWER,
     .period=ANT_SPORT_POWER_PERIOD,

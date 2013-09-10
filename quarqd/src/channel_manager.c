@@ -18,6 +18,7 @@ void channel_manager_init(channel_manager_t *self) {
     channel_manager_remember_device(self, 17, CHANNEL_TYPE_WG);
     channel_manager_remember_device(self, 17, CHANNEL_TYPE_BG);
     channel_manager_remember_device(self, 17, CHANNEL_TYPE_BP);
+    channel_manager_remember_device(self, 17, CHANNEL_TYPE_PD);
     channel_manager_remember_device(self, 17, CHANNEL_TYPE_SandC);
     channel_manager_remember_device(self, 17, CHANNEL_TYPE_SPEED);
   
