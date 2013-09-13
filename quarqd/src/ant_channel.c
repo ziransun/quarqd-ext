@@ -207,7 +207,7 @@ void ant_channel_open(ant_channel_t *self, int device_number, int channel_type) 
   if (self->channel_assigned)
     ANT_UnassignChannel(self->number);        
   else 
-    ant_channel_attempt_transition(self,ANT_UNASSIGN_CHANNEL);      
+    ant_channel_attempt_transition(self,ANT_UNASSIGN_CHANNEL, "");
 }
 
 
@@ -275,10 +275,12 @@ void ant_channel_receive_message(ant_channel_t *self, unsigned char *ant_message
 
 
 void ant_channel_channel_event(ant_channel_t *self, unsigned char *ant_message) { 
+
+
   unsigned char *message=ant_message+2;
 
   if (MESSAGE_IS_RESPONSE_NO_ERROR(message)) {
-    ant_channel_attempt_transition(self,RESPONSE_NO_ERROR_MESSAGE_ID(message));
+    ant_channel_attempt_transition(self,RESPONSE_NO_ERROR_MESSAGE_ID(message), message);
   } else if (MESSAGE_IS_EVENT_CHANNEL_CLOSED(message)) {
     ANT_UnassignChannel(self->number);
   } else if (MESSAGE_IS_EVENT_RX_SEARCH_TIMEOUT(message)) {
@@ -407,7 +409,35 @@ void ant_channel_broadcast_event(ant_channel_t *self, unsigned char *ant_message
       self->manufacturer_id=MANUFACTURER_MANUFACTURER_ID(message);
       self->product_id=MANUFACTURER_MODEL_NUMBER_ID(message);
       ant_channel_check_cinqo(self);
-    }            
+    }
+    //handle pedometer message
+    else if ((message[0]==0x4E) && (message[2]==0x43)){
+    	//ziran-start handling 0x43 messages
+		DEBUG_ANT_CONNECTION("ziran1 - message [3] is %x.\n", message[3]);
+    	switch (message[3])
+		{
+			DEBUG_ANT_CONNECTION("ziran - handling 0x43 message.\n");
+			DEBUG_ANT_CONNECTION("ziran2 - message [3] is %x.\n", message[3]);
+			case 0x33://receive Heartbeat Page
+			{
+				break;
+			}
+			case 0x34://receive Beacon
+			{
+				ANT_SetBeacon(self->number, message[5], message[6]);   //ziran
+				break;
+			}
+			case 0x38://receive "wait for transmission"
+			{
+				ANT_SendTransmissionRequest(self->number, message[5], message[6]);
+				break;
+			}
+			case 0x39://receive "end of transmission"
+			{
+				break;
+			}
+		}
+    }
   }
 
   {
@@ -429,7 +459,10 @@ void ant_channel_broadcast_event(ant_channel_t *self, unsigned char *ant_message
    case CHANNEL_TYPE_BP:
 	  ant_message_print_debug(message);
 	  //matched=xml_message_interpret_weight_broadcast(self, message);//TODO: update .py files
-	  break;	  
+	  break;
+   case CHANNEL_TYPE_PD:
+   	  ant_message_print_debug(message);
+	  //matched=xml_message_interpret_weight_broadcast(self, message);//TODO: update .py files
     case CHANNEL_TYPE_POWER:    
       matched=xml_message_interpret_power_broadcast(self, message);
       break;
@@ -579,7 +612,9 @@ void ant_channel_request_calibrate(ant_channel_t *self) {
   ANT_RequestCalibrate(self->number);
 }
 
-void ant_channel_attempt_transition(ant_channel_t *self, int message_id) {
+void ant_channel_attempt_transition(ant_channel_t *self, int message_id, unsigned char * message) {
+
+  DEBUG_ANT_CONNECTION("Ziran - calling ant_channel_attemp_transition\n");
   
   const ant_sensor_type_t *st;
 
@@ -590,6 +625,8 @@ void ant_channel_attempt_transition(ant_channel_t *self, int message_id) {
 
   // update state
   self->state=message_id;
+
+  DEBUG_ANT_CONNECTION("Ziran - ant_channel_attemp_transition, self->state: %x\n", self->state);
 
   // do transitions
   switch (self->state) {
@@ -646,6 +683,38 @@ void ant_channel_attempt_transition(ant_channel_t *self, int message_id) {
     break;
   case ANT_CHANNEL_PERIOD:
     ANT_SetChannelFreq(self->number, st->frequency);
+    //ziran-start handling 0x43 messages
+   /* DEBUG_ANT_CONNECTION("ziran1 - message [3] is %d.\n", message[3]);
+    switch (message[3])
+	{
+    	DEBUG_ANT_CONNECTION("ziran - handling 0x43 message.\n");
+    	DEBUG_ANT_CONNECTION("ziran2 - message [3] is %d.\n", message[3]);
+		case 0x33://receive Heartbeat Page
+		{
+			//send Settings Page 128(0x80) Date/time
+			//SendSettingsPage128();
+			break;
+		}
+		case 0x34://receive Beacon
+		{
+
+			ANT_SetBeacon(self->number, message[6], message[7]);   //ziran
+			break;
+		}
+		case 0x38://receive "wait for transmission"
+		{
+
+			ANT_SendTransmissionRequest(self->number, message[6], message[7]);
+			break;
+		}
+		case 0x39://receive "end of transmission"
+		{
+			break;
+		}
+
+	} */
+    //ziran - end handling
+
     break;
   case ANT_CHANNEL_FREQUENCY:
     ANT_Open(self->number);

@@ -197,6 +197,79 @@ void ANT_Close(const unsigned char channel) {
 	SendMessage();
 }
 
+// used for pedometer data request
+ANT_SetBeacon(int channel, int byte_6, int byte_7) {
+	unsigned char *data = txMessage + ANT_OFFSET_DATA;
+	txMessage[ANT_OFFSET_LENGTH] = 9;
+	txMessage[ANT_OFFSET_ID] = 0x4e;
+	*data++ = channel;
+
+	unsigned char bArr[8] = { 0x44, 0x02, 0x39, 0x00, 0x00, 0x00, 28, 59 };
+	bArr[4] = byte_6;
+	bArr[5] = byte_7;
+	int j;
+
+	for (j=0; j < 8; j++)
+	{
+		*data++ = bArr[j];
+	}
+	//SendMessage();
+	SendMessage_pedometer();
+}
+
+// Request for pedometer data transmission
+ANT_SendTransmissionRequest(int channel, int byte_6, int byte_7){
+	unsigned char *data = txMessage + ANT_OFFSET_DATA;
+	txMessage[ANT_OFFSET_LENGTH] = 9;
+	txMessage[ANT_OFFSET_ID] = 0x4e;
+	*data++ = channel;
+
+	unsigned char bArr[8] = { 0x44, 0x04, 0x00, 0x00, 0x00, 0x00, 28, 59 };
+	bArr[4] = byte_6;
+	bArr[5] = byte_7;
+	int j;
+	for (j=0; j < 8; j++)
+	{
+		*data++ = bArr[j];
+	}
+	//SendMessage();
+	SendMessage_pedometer();
+}
+
+void SendMessage_pedometer(void) {
+        int i;
+	const int length = txMessage[ANT_OFFSET_LENGTH] + ANT_OFFSET_DATA;
+	unsigned char checksum = ANT_SYNC_BYTE;
+
+	txMessage[ANT_OFFSET_SYNC] = ANT_SYNC_BYTE;
+
+	for (i = ANT_OFFSET_LENGTH; i < length; i++)
+		checksum ^= txMessage[i];
+
+	txMessage[i++] = checksum;
+
+	if (quarqd_config.debug_level & DEBUG_LEVEL_ANT_MESSAGES) {
+	  int j;
+	  for (j=0; j<i; j++) {
+#ifdef DEBUG
+	    if (1) {
+#else
+	    if (j<4) {
+#endif
+	      fprintf(stderr, "0x%02x ",txMessage[j]);
+	    } else {
+	      fprintf(stderr, "0x.. ");
+	    }
+	  }
+	  fprintf(stderr,"\n");
+	}
+
+	Transmit(txMessage, i);
+}
+
+
+
+
 void SendMessage(void) {
         int i;
 	const int length = txMessage[ANT_OFFSET_LENGTH] + ANT_OFFSET_DATA;

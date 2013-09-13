@@ -118,7 +118,7 @@ void ANT_ReceiveByte(unsigned char byte);
 #define ANT_SPORT_WG_PERIOD 8192     //Weight Scale 
 #define ANT_SPORT_BG_PERIOD 8192    // Blood Glucose
 #define ANT_SPORT_BP_PERIOD 8192    //Blood Pressure - optional 4096
-#define ANT_SPORT_PD_PERIOD  4096  //Pedometer - optional 1024
+#define ANT_SPORT_PD_PERIOD  8192  //Pedometer
 #define ANT_SPORT_POWER_PERIOD 8182
 #define ANT_SPORT_SPEED_PERIOD 8118
 #define ANT_SPORT_CADENCE_PERIOD 8102
