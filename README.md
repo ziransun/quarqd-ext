@@ -31,6 +31,17 @@ If USB is not mounted automatically in your /dev, try the follows
     
 Replace the vendor and product code with those come with your ant usb.
 
+### Add user to dialout group
+
+You may need to add your user account to the dialout group in order to open the serial port from your user accout rather than root. 
+for example, in Ubuntu 
+    
+    z.sun> sudo adduser z.sun dialout
+    z.sun> sudo reboot
+    
+    
+
+
 
     
     
