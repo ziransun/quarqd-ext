@@ -33,7 +33,7 @@ Replace the vendor and product code with those come with your ant usb.
 
 ### Add user to dialout group
 
-You may need to add your user account to the dialout group in order to open the serial port from your user accout rather than root. 
+Check if /dev/ttyUSB0 is in dialout groupt. If so, You may need to add your user account to the dialout group in order to open the serial port from your user accout rather than root. 
 for example, in Ubuntu 
     
     z.sun> sudo adduser z.sun dialout
